@@ -179,23 +179,27 @@ class QtMeasurementWidget(QWidget):
             print(f"{widget.measurement_name} is set: {widget_is_set}")
 
         labels = self._label_image_layer.data
-        image = self._intensity_image_layer.data
 
-        # deal with dimensionality of data
-        if len(image.shape) > len(labels.shape):
-            dim = 0
-            subset = ""
-            while len(image.shape) > len(labels.shape):
-                current_dim_value = self._viewer.dims.current_step[dim]
-                dim = dim + 1
-                image = image[current_dim_value]
-                subset = subset + ", " + str(current_dim_value)
-            warnings.warn(
-                "Not the full image was analysed, just the subset ["
-                + subset[2:]
-                + "] according to selected timepoint / slice."
-            )
+        if self._intensity_image_layer is not None:
+            image = self._intensity_image_layer.data
 
+            # deal with dimensionality of data
+            if len(image.shape) > len(labels.shape):
+                dim = 0
+                subset = ""
+                while len(image.shape) > len(labels.shape):
+                    current_dim_value = self._viewer.dims.current_step[dim]
+                    dim = dim + 1
+                    image = image[current_dim_value]
+                    subset = subset + ", " + str(current_dim_value)
+                warnings.warn(
+                    "Not the full image was analysed, just the subset ["
+                    + subset[2:]
+                    + "] according to selected timepoint / slice."
+                )
+
+        else:
+            image = None
         measurement_table = measure_selected(
             label_image=labels,
             intensity_image=image,
