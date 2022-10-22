@@ -45,3 +45,9 @@ def register_measurement_set(
 def available_measurements() -> List[str]:
     """Get the names of all available measurements."""
     return [k for k in _measurements]
+
+
+from morphometrics_engine.measure import (  # noqa
+    measure_all_with_defaults,
+    measure_selected,
+)
