@@ -1,0 +1,21 @@
+name: morphometrics-engine
+display_name: morphometrics engine
+contributions:
+  commands:
+    - id: morphometrics-engine.make_qwidget
+      python_name: morphometrics_engine._widget:ExampleQWidget
+      title: Make example QWidget
+    - id: morphometrics-engine.make_magic_widget
+      python_name: morphometrics_engine._widget:example_magic_widget
+      title: Make example magic widget
+    - id: morphometrics-engine.make_func_widget
+      python_name: morphometrics_engine._widget:example_function_widget
+      title: Make example function widget
+  widgets:
+    - command: morphometrics-engine.make_qwidget
+      display_name: Example QWidget
+    - command: morphometrics-engine.make_magic_widget
+      display_name: Example Magic Widget
+    - command: morphometrics-engine.make_func_widget
+      autogenerate: true
+      display_name: Example Function Widget
