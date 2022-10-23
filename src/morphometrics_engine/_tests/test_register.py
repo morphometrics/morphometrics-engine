@@ -41,9 +41,8 @@ def test_register_measurement():
     assert measurement_entry["intensity_image"] is False
     assert measurement_entry["callable"] is measure_area
 
-    # there should be just the measurement we added in available_measurements
     all_measurement_names = available_measurements()
-    np.testing.assert_array_equal([measurement_name], all_measurement_names)
+    assert measurement_name in all_measurement_names
 
     label_image = simple_3d_label_image()
     label_table = measure_all_with_defaults(label_image)
@@ -53,6 +52,8 @@ def test_register_measurement():
 
 
 def test_register_measurement_set():
+    """Test registering and using a set of measurements"""
+
     measurement_name = "region_props"
 
     @register_measurement_set(
@@ -97,7 +98,7 @@ def test_register_measurement_set():
 
     # there should be just the measurement we added in available_measurements
     all_measurement_names = available_measurements()
-    np.testing.assert_array_equal([measurement_name], all_measurement_names)
+    assert measurement_name in all_measurement_names
 
     # measure all
     label_image = simple_3d_label_image()
