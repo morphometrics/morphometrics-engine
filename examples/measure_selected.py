@@ -1,10 +1,13 @@
-import napari
+"""This example shows how to register measurements
+and make measurements with a subset
+"""
+
 import numpy as np
 import pandas as pd
 from skimage.measure import regionprops_table
 
 from morphometrics_engine import (
-    measure_all_with_defaults,
+    measure_selected,
     register_measurement,
     register_measurement_set,
 )
@@ -65,17 +68,20 @@ if __name__ == "__main__":
     # make the intensity image
     intensity_image = np.random.random((10, 10, 10))
 
-    print(measure_area(label_im))
-
-    print(measure_all_with_defaults(label_im, intensity_image=intensity_image))
-
-    viewer = napari.Viewer()
-    viewer.add_image(intensity_image)
-    viewer.add_labels(label_im)
-
-    viewer.window.add_plugin_dock_widget(
-        plugin_name="morphometrics-engine",
-        widget_name="Measure region properties",
+    measurement_selection = [
+        "measure_area",  # single measurements can be specified with string
+        {
+            "name": "region_props",  # sets are specified with a dictionary
+            "choices": {  # choices can be specified with a dictionary
+                "intensity": True,  # the key is the name of the choice
+                "centroid": False,  # the value is True/False
+            },
+        },
+    ]
+    print(
+        measure_selected(
+            label_image=label_im,
+            intensity_image=intensity_image,
+            measurement_selection=measurement_selection,
+        )
     )
-
-    napari.run()
